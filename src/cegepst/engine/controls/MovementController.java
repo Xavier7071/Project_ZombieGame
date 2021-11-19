@@ -1,8 +1,6 @@
 package cegepst.engine.controls;
 
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-
 public class MovementController extends Controller {
 
     private int upKey = KeyEvent.VK_UP;
@@ -33,6 +31,14 @@ public class MovementController extends Controller {
 
     public boolean isMoving() {
         return isLeftPressed() || isRightPressed() || isUpPressed() || isDownPressed();
+    }
+
+    public int getMouseXPosition() {
+        return getControllerXPosition();
+    }
+
+    public int getMouseYPosition() {
+        return getControllerYPosition();
     }
 
     public void setUpKey(int upKey) {

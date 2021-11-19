@@ -13,8 +13,8 @@ public abstract class Controller implements KeyListener, MouseListener, MouseMot
 
     public Controller() {
         pressedKeys = new HashMap<>();
-        RenderingEngine.getInstance().addMouseListener(this);
         RenderingEngine.getInstance().addMouseMotionListener(this);
+        RenderingEngine.getInstance().addMouseListener(this);
     }
 
     protected void bindKeys(int[] keys) {
@@ -39,15 +39,15 @@ public abstract class Controller implements KeyListener, MouseListener, MouseMot
         return pressedKeys.containsKey(key) && pressedKeys.get(key);
     }
 
-    public boolean isMousePressed() {
+    protected boolean isMousePressed() {
         return isMousePressed;
     }
 
-    public int getMouseXPosition() {
+    protected int getControllerXPosition() {
         return mouseXPosition;
     }
 
-    public int getMouseYPosition() {
+    protected int getControllerYPosition() {
         return mouseYPosition;
     }
 
@@ -88,7 +88,6 @@ public abstract class Controller implements KeyListener, MouseListener, MouseMot
 
     @Override
     public void mouseEntered(MouseEvent e) {
-
     }
 
     @Override
@@ -98,12 +97,13 @@ public abstract class Controller implements KeyListener, MouseListener, MouseMot
 
     @Override
     public void mouseDragged(MouseEvent e) {
-
+        mouseXPosition = e.getXOnScreen();
+        mouseYPosition = e.getYOnScreen();
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        mouseXPosition = e.getX();
-        mouseYPosition = e.getY();
+        mouseXPosition = e.getXOnScreen();
+        mouseYPosition = e.getYOnScreen();
     }
 }

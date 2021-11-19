@@ -1,6 +1,7 @@
 package cegepst.ZombieGame;
 
 import cegepst.engine.Buffer;
+import cegepst.engine.CollidableRepository;
 import cegepst.engine.controls.Direction;
 import cegepst.engine.entities.MovableEntity;
 
@@ -11,8 +12,8 @@ public class Bullet extends MovableEntity {
     private final Direction playerDirection;
 
     public Bullet(Player player) {
-        playerDirection = player.getDirection();
-        setSpeed(5);
+        playerDirection = player.mouseDirection();
+        setSpeed(7);
         switch (playerDirection) {
             case RIGHT -> {
                 teleport(player.getX() + player.getWidth() + 1, player.getY() + 15 - 2);
@@ -31,6 +32,7 @@ public class Bullet extends MovableEntity {
                 setDimension(4, 8);
             }
         }
+        CollidableRepository.getInstance().registerEntity(this);
     }
 
     @Override

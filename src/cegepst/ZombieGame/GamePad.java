@@ -12,9 +12,17 @@ public class GamePad extends MovementController {
     public GamePad() {
         bindKey(quitKey);
         RenderingEngine.getInstance().addKeyListener(this);
+        setUpKey(KeyEvent.VK_W);
+        setLeftKey(KeyEvent.VK_A);
+        setDownKey(KeyEvent.VK_S);
+        setRightKey(KeyEvent.VK_D);
     }
 
     public boolean isQuitPressed() {
         return isKeyPressed(quitKey);
+    }
+
+    public boolean isControllerMousePressed() {
+        return isMousePressed();
     }
 }

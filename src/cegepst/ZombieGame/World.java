@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class World {
 
-    private static final String MAP_PATH = "images/final-map.png";
+    private static final String MAP_PATH = "images/map-test.png";
     private Image background;
     private ArrayList<Blockade> worldBorders;
 
@@ -26,7 +26,7 @@ public class World {
     }
 
     public void draw(Buffer buffer) {
-        buffer.drawImage(background, -2800, -1800);
+        buffer.drawImage(background, 0, 0);
         for (Blockade blockade : worldBorders) {
             blockade.draw(buffer);
         }
@@ -38,5 +38,9 @@ public class World {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public ArrayList<Blockade> getWorldBorders() {
+        return worldBorders;
     }
 }

@@ -21,17 +21,23 @@ public class Player extends ControllableEntity {
     private Image[] downFrames;
     private int currentAnimationFrame = 1;
     private int nextFrame = ANIMATION_SPEED;
+    private int cooldown = 0;
 
     public Player(MovementController controller) {
         super(controller);
         setDimension(32, 32);
-        setSpeed(3);
+        setSpeed(5);
         loadSpriteSheet();
         loadAnimationFrames();
     }
 
     public Bullet fire() {
+        cooldown = 30;
         return new Bullet(this);
+    }
+
+    public boolean canFire() {
+        return cooldown == 0;
     }
 
     @Override
@@ -50,12 +56,15 @@ public class Player extends ControllableEntity {
         } else {
             currentAnimationFrame = 1;
         }
+        cooldown--;
+        if (cooldown <= 0) {
+            cooldown = 0;
+        }
     }
 
     @Override
     public void draw(Buffer buffer) {
-        //switch pour souris
-        switch (getDirection()) {
+        switch (mouseDirection()) {
             case RIGHT -> buffer.drawImage(rightFrames[currentAnimationFrame], x, y);
             case LEFT -> buffer.drawImage(leftFrames[currentAnimationFrame], x, y);
             case UP -> buffer.drawImage(upFrames[currentAnimationFrame], x, y);

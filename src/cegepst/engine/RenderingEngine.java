@@ -1,5 +1,7 @@
 package cegepst.engine;
 
+import cegepst.ZombieGame.Camera;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyListener;
@@ -23,7 +25,7 @@ public class RenderingEngine {
     }
 
     public Buffer getRenderingBuffer() {
-        bufferedImage = new BufferedImage(800, 600, BufferedImage.TYPE_INT_RGB);
+        bufferedImage = new BufferedImage(2908, 1310, BufferedImage.TYPE_INT_RGB);
         Graphics2D graphics;
         graphics = bufferedImage.createGraphics();
         graphics.setRenderingHints(getOptimalRenderingHints());
@@ -32,7 +34,7 @@ public class RenderingEngine {
 
     public void renderBufferOnScreen() {
         Graphics2D graphics = (Graphics2D) panel.getGraphics();
-        graphics.drawImage(bufferedImage, 0, 0, panel);
+        graphics.drawImage(bufferedImage, Camera.getX(), Camera.getY(), panel);
         Toolkit.getDefaultToolkit().sync();
         graphics.dispose();
     }
@@ -68,7 +70,7 @@ public class RenderingEngine {
 
     private void initializeScreen() {
         screen = new Screen();
-        screen.setTitle("New Game");
+        screen.setTitle("Zombie Game");
         screen.setSize(800, 600);
     }
 
