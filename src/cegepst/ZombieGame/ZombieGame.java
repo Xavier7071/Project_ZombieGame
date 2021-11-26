@@ -40,7 +40,7 @@ public class ZombieGame extends Game {
 
         for (Bullet bullet : bullets) {
             bullet.update();
-            for (Blockade blockade : world.getWorldBorders()) {
+            for (Blockade blockade : world.getBorders()) {
                 if (bullet.hitBoxIntersectWith(blockade)) {
                     killedEntities.add(bullet);
                 }
@@ -62,6 +62,7 @@ public class ZombieGame extends Game {
         for (Bullet bullet : bullets) {
             bullet.draw(buffer);
         }
+        world.drawObjects(buffer);
     }
 
     @Override

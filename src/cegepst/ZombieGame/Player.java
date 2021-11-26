@@ -32,7 +32,7 @@ public class Player extends ControllableEntity {
     }
 
     public Bullet fire() {
-        cooldown = 30;
+        cooldown = 40;
         return new Bullet(this);
     }
 

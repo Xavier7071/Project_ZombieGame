@@ -18,21 +18,20 @@ public abstract class ControllableEntity extends MovableEntity {
         }
         if (controller.isUpPressed()) {
             moveUp();
-        }
-        if (controller.isDownPressed()) {
+        } else if (controller.isDownPressed()) {
             moveDown();
-        }  if (controller.isLeftPressed()) {
+        } else if (controller.isLeftPressed()) {
             moveLeft();
-        }  if (controller.isRightPressed()) {
+        } else if (controller.isRightPressed()) {
             moveRight();
         }
     }
 
     public Direction mouseDirection() {
-        if (controller.getMouseYPosition() < 375) {
+        if (controller.getMouseYPosition() < 350) {
             return Direction.UP;
         }
-        if (controller.getMouseYPosition() > 485) {
+        if (controller.getMouseYPosition() > 510) {
             return Direction.DOWN;
         }
         if (controller.getMouseXPosition() > 799) {
