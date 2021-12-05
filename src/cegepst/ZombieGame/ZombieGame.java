@@ -14,16 +14,18 @@ public class ZombieGame extends Game {
     private Player player;
     private ArrayList<Bullet> bullets;
     private Camera camera;
+    private RoundManager roundManager;
 
     @Override
     public void initialize() {
-        camera = new Camera();
         gamePad = new GamePad();
         bullets = new ArrayList<>();
         world = new World();
         world.load();
         player = new Player(gamePad);
-        player.teleport(1435, 800);
+        player.teleport(2110, 1280);
+        camera = new Camera(player);
+        roundManager = new RoundManager();
     }
 
     @Override
@@ -31,8 +33,8 @@ public class ZombieGame extends Game {
         if (gamePad.isQuitPressed()) {
             stop();
         }
-        camera.position(player);
         player.update();
+        camera.position(player);
         if (gamePad.isControllerMousePressed() && player.canFire()) {
             bullets.add(player.fire());
         }
@@ -63,6 +65,7 @@ public class ZombieGame extends Game {
             bullet.draw(buffer);
         }
         world.drawObjects(buffer);
+        player.drawUI(buffer);
     }
 
     @Override

@@ -3,28 +3,16 @@ package cegepst.ZombieGame;
 public class Camera {
     private static int x;
     private static int y;
-    private static Camera instance;
 
-    public static Camera getInstance() {
-        if (instance == null) {
-            instance = new Camera();
-        }
-        return instance;
-    }
-
-    public Camera() {
-        x = -1050;
-        y = -500;
+    public Camera(Player player) {
+        x = player.getX() - 800 / 2;
+        y = player.getY() - 600 / 2;
     }
 
     public void position(Player player) {
         if (player.hasMoved()) {
-            switch (player.getDirection()) {
-                case RIGHT -> x -= player.getSpeed();
-                case LEFT -> x += player.getSpeed();
-                case UP -> y += player.getSpeed();
-                case DOWN -> y -= player.getSpeed();
-            }
+            x = player.getX() - 800 / 2;
+            y = player.getY() - 600 / 2;
         }
     }
 

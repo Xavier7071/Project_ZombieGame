@@ -92,7 +92,6 @@ public abstract class Controller implements KeyListener, MouseListener, MouseMot
 
     @Override
     public void mouseExited(MouseEvent e) {
-
     }
 
     @Override

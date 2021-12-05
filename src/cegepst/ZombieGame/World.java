@@ -13,11 +13,11 @@ import java.util.ArrayList;
 
 public class World {
 
-    private static final String MAP_PATH = "images/map-test.png";
+    private static final String MAP_PATH = "images/final-map.png";
     private static final String OBJECTS_PATH = "images/objects.png";
+    private final ArrayList<Blockade> borders;
     private Image background;
     private Image objectsLayer;
-    private final ArrayList<Blockade> borders;
 
     public World() {
         borders = new ArrayList<>();
@@ -33,7 +33,7 @@ public class World {
     }
 
     public void drawObjects(Buffer buffer) {
-        buffer.drawImage(objectsLayer, -175, -40);
+        buffer.drawImage(objectsLayer, 512, 512);
     }
 
     public void load() {
@@ -57,19 +57,17 @@ public class World {
             JSONArray array = jsonObj.getJSONArray("objects");
             for (int i = 0; i < array.length(); i++) {
                 JSONObject obj = array.getJSONObject(i);
-                int x = (int) Math.ceil(obj.getDouble("x")) + 1360;
-                int y = (int) Math.ceil(obj.getDouble("y")) + 2000;
+                int x = (int) Math.ceil(obj.getDouble("x")) + 2050;
+                int y = (int) Math.ceil(obj.getDouble("y")) + 2550;
                 obj.getDouble("y");
                 createBlockade(x, y);
             }
-        } catch (
-                IOException e) {
+        } catch (IOException e) {
             System.err.println("ERREUR");
         }
     }
 
     private void createBlockade(int x, int y) {
-        System.out.println(x);
         Blockade blockade = new Blockade();
         blockade.teleport(x, y);
         blockade.setDimension(10, 10);

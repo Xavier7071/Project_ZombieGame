@@ -4,6 +4,9 @@ package cegepst.engine.entities;
 import cegepst.engine.controls.Direction;
 import cegepst.engine.controls.MovementController;
 
+import javax.swing.*;
+import java.awt.*;
+
 public abstract class ControllableEntity extends MovableEntity {
 
     private final MovementController controller;
@@ -28,16 +31,16 @@ public abstract class ControllableEntity extends MovableEntity {
     }
 
     public Direction mouseDirection() {
-        if (controller.getMouseYPosition() < 350) {
+        if (controller.getMouseYPosition() < 485) {
             return Direction.UP;
         }
-        if (controller.getMouseYPosition() > 510) {
+        if (controller.getMouseYPosition() > 580) {
             return Direction.DOWN;
         }
-        if (controller.getMouseXPosition() > 799) {
+        if (controller.getMouseXPosition() > 1000) {
             return Direction.RIGHT;
         }
-        if (controller.getMouseXPosition() < 735) {
+        if (controller.getMouseXPosition() < 900) {
             return Direction.LEFT;
         }
         return Direction.DOWN;

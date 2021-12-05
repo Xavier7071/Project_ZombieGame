@@ -25,7 +25,8 @@ public class RenderingEngine {
     }
 
     public Buffer getRenderingBuffer() {
-        bufferedImage = new BufferedImage(2908, 1310, BufferedImage.TYPE_INT_RGB);
+        System.setProperty("sun.java2d.opengl", "True");
+        bufferedImage = new BufferedImage(4000, 2500, BufferedImage.TYPE_INT_RGB);
         Graphics2D graphics;
         graphics = bufferedImage.createGraphics();
         graphics.setRenderingHints(getOptimalRenderingHints());
@@ -34,7 +35,7 @@ public class RenderingEngine {
 
     public void renderBufferOnScreen() {
         Graphics2D graphics = (Graphics2D) panel.getGraphics();
-        graphics.drawImage(bufferedImage, Camera.getX(), Camera.getY(), panel);
+        graphics.drawImage(bufferedImage, -Camera.getX(), -Camera.getY(), panel);
         Toolkit.getDefaultToolkit().sync();
         graphics.dispose();
     }

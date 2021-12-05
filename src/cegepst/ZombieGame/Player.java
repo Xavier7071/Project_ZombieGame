@@ -1,5 +1,6 @@
 package cegepst.ZombieGame;
 
+import cegepst.ZombieGame.Bullet;
 import cegepst.engine.Buffer;
 import cegepst.engine.controls.MovementController;
 import cegepst.engine.entities.ControllableEntity;
@@ -22,6 +23,8 @@ public class Player extends ControllableEntity {
     private int currentAnimationFrame = 1;
     private int nextFrame = ANIMATION_SPEED;
     private int cooldown = 0;
+    private int ammo = 10;
+    private int health = 100;
 
     public Player(MovementController controller) {
         super(controller);
@@ -33,11 +36,12 @@ public class Player extends ControllableEntity {
 
     public Bullet fire() {
         cooldown = 40;
+        ammo--;
         return new Bullet(this);
     }
 
     public boolean canFire() {
-        return cooldown == 0;
+        return cooldown == 0 && ammo > 0;
     }
 
     @Override
@@ -60,6 +64,9 @@ public class Player extends ControllableEntity {
         if (cooldown <= 0) {
             cooldown = 0;
         }
+        if (ammo <= 0) {
+            ammo = 0;
+        }
     }
 
     @Override
@@ -70,6 +77,12 @@ public class Player extends ControllableEntity {
             case UP -> buffer.drawImage(upFrames[currentAnimationFrame], x, y);
             case DOWN -> buffer.drawImage(downFrames[currentAnimationFrame], x, y);
         }
+    }
+
+    public void drawUI(Buffer buffer) {
+        buffer.drawRectangle(x - 75, y + 275, 100, 15, Color.black);
+        buffer.drawRectangle(x - 75, y + 275, health, 15, Color.RED);
+        buffer.drawText("Ammo " + ammo, x + 50, y + 285, Color.ORANGE);
     }
 
     private void loadSpriteSheet() {
