@@ -1,5 +1,6 @@
 package cegepst.ZombieGame;
 
+import cegepst.ZombieGame.Assets.Blockade;
 import cegepst.engine.Buffer;
 import org.json.JSONArray;
 import org.json.JSONObject;

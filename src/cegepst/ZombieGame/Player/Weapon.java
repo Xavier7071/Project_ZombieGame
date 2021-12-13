@@ -1,6 +1,6 @@
 package cegepst.ZombieGame.Player;
 
-import cegepst.ZombieGame.Sound;
+import cegepst.ZombieGame.Assets.Sound;
 import cegepst.engine.Buffer;
 
 import java.awt.*;

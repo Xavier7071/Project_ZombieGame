@@ -1,5 +1,6 @@
-package cegepst.ZombieGame;
+package cegepst.ZombieGame.Assets;
 
+import cegepst.ZombieGame.GameSettings;
 import cegepst.engine.Buffer;
 import cegepst.engine.CollidableRepository;
 import cegepst.engine.entities.StaticEntity;

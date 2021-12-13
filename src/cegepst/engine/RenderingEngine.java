@@ -1,6 +1,6 @@
 package cegepst.engine;
 
-import cegepst.ZombieGame.Camera;
+import cegepst.ZombieGame.Assets.Camera;
 
 import javax.swing.*;
 import java.awt.*;

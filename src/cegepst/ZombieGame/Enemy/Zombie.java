@@ -1,6 +1,6 @@
 package cegepst.ZombieGame.Enemy;
 
-import cegepst.ZombieGame.Animations;
+import cegepst.ZombieGame.Assets.Animations;
 
 public class Zombie extends Enemy {
 

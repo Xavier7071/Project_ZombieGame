@@ -1,4 +1,4 @@
-package cegepst.ZombieGame;
+package cegepst.ZombieGame.Assets;
 
 import cegepst.ZombieGame.Player.Player;
 

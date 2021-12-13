@@ -1,5 +1,8 @@
 package cegepst.ZombieGame;
 
+import cegepst.ZombieGame.Assets.Blockade;
+import cegepst.ZombieGame.Assets.Camera;
+import cegepst.ZombieGame.Assets.Sound;
 import cegepst.ZombieGame.Enemy.Zombie;
 import cegepst.ZombieGame.Items.Ammo;
 import cegepst.ZombieGame.Items.Item;
