@@ -1,5 +1,7 @@
 package cegepst.ZombieGame;
 
+import cegepst.ZombieGame.Player.Player;
+
 public class Camera {
     private static int x;
     private static int y;

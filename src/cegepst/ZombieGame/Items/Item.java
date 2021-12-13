@@ -1,4 +1,4 @@
-package cegepst.ZombieGame;
+package cegepst.ZombieGame.Items;
 
 import cegepst.engine.Buffer;
 import cegepst.engine.entities.StaticEntity;

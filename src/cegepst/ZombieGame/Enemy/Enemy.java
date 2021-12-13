@@ -1,5 +1,8 @@
-package cegepst.ZombieGame;
+package cegepst.ZombieGame.Enemy;
 
+import cegepst.ZombieGame.Animations;
+import cegepst.ZombieGame.Blockade;
+import cegepst.ZombieGame.World;
 import cegepst.engine.Buffer;
 import cegepst.engine.CollidableRepository;
 import cegepst.engine.controls.Direction;

@@ -1,5 +1,6 @@
-package cegepst.ZombieGame;
+package cegepst.ZombieGame.Player;
 
+import cegepst.ZombieGame.Player.Player;
 import cegepst.engine.Buffer;
 import cegepst.engine.controls.Direction;
 import cegepst.engine.entities.MovableEntity;

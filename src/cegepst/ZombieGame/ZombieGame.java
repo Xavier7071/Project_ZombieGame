@@ -1,5 +1,11 @@
 package cegepst.ZombieGame;
 
+import cegepst.ZombieGame.Enemy.Zombie;
+import cegepst.ZombieGame.Items.Ammo;
+import cegepst.ZombieGame.Items.Item;
+import cegepst.ZombieGame.Items.Money;
+import cegepst.ZombieGame.Player.Bullet;
+import cegepst.ZombieGame.Player.Player;
 import cegepst.engine.Buffer;
 import cegepst.engine.CollidableRepository;
 import cegepst.engine.Game;

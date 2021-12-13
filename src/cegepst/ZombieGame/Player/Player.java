@@ -1,5 +1,7 @@
-package cegepst.ZombieGame;
+package cegepst.ZombieGame.Player;
 
+import cegepst.ZombieGame.Animations;
+import cegepst.ZombieGame.GamePad;
 import cegepst.engine.Buffer;
 import cegepst.engine.CollidableRepository;
 import cegepst.engine.controls.MovementController;

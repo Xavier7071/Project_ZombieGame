@@ -1,5 +1,6 @@
 package cegepst.ZombieGame;
 
+import cegepst.ZombieGame.Enemy.Zombie;
 import cegepst.engine.Buffer;
 
 import java.util.ArrayList;

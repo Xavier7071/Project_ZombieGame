@@ -1,4 +1,6 @@
-package cegepst.ZombieGame;
+package cegepst.ZombieGame.Items;
+
+import cegepst.ZombieGame.Items.Item;
 
 public class Ammo extends Item {
 
