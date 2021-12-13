@@ -7,6 +7,7 @@ import cegepst.engine.entities.StaticEntity;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class ZombieGame extends Game {
 
@@ -15,6 +16,7 @@ public class ZombieGame extends Game {
     private Camera camera;
     private Round round;
     private ArrayList<Bullet> bullets;
+    private ArrayList<Item> items;
 
     @Override
     public void initialize() {
@@ -26,6 +28,7 @@ public class ZombieGame extends Game {
         round = new Round();
         round.load(1);
         bullets = new ArrayList<>();
+        items = new ArrayList<>();
     }
 
     @Override
@@ -48,6 +51,9 @@ public class ZombieGame extends Game {
     @Override
     public void draw(Buffer buffer) {
         World.getInstance().draw(buffer);
+        for (Item item : items) {
+            item.draw(buffer);
+        }
         player.draw(buffer);
         round.draw(buffer);
         for (Bullet bullet : bullets) {
@@ -85,8 +91,20 @@ public class ZombieGame extends Game {
                     killedEntities.add(bullet);
                 }
                 if (zombie.getHealth() <= 0) {
+                    spawnRandomItem(zombie);
                     killedEntities.add(zombie);
                 }
+            }
+        }
+
+        for (Item item : items) {
+            if (player.hitBoxIntersectWith(item)) {
+                if (item instanceof Money) {
+                    player.addMoney();
+                } else {
+                    player.addAmmo();
+                }
+                killedEntities.add(item);
             }
         }
 
@@ -97,12 +115,25 @@ public class ZombieGame extends Game {
             if (entity instanceof Zombie) {
                 round.getZombies().remove(entity);
             }
+            if (entity instanceof Item) {
+                items.remove(entity);
+            }
             CollidableRepository.getInstance().unregisterEntity(entity);
         }
         for (Zombie zombie : round.getZombies()) {
             if (zombie.hitBoxIntersectWith(player)) {
                 player.damage(1);
             }
+        }
+    }
+
+    private void spawnRandomItem(Zombie zombie) {
+        Random random = new Random();
+        int number = random.nextInt((2 - 1) + 1) + 1;
+        if (number == 1) {
+            items.add(new Money(zombie.getX(), zombie.getY()));
+        } else {
+            items.add(new Ammo(zombie.getX(), zombie.getY()));
         }
     }
 }

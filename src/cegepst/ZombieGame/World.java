@@ -53,7 +53,6 @@ public class World {
         return borders;
     }
 
-
     private void readJson(String filePath) {
         try {
             Path fileName = Path.of(filePath);

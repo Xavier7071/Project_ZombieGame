@@ -52,11 +52,16 @@ public class Weapon {
         }
     }
 
+    public int getDamage() {
+        return damage;
+    }
+
+    public void addAmmo() {
+        mag += 5;
+    }
+
     private boolean canReload() {
         return mag > 0 && ammo < 10;
     }
 
-    public int getDamage() {
-        return damage;
-    }
 }

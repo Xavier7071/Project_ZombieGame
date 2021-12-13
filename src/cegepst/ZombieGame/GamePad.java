@@ -7,7 +7,7 @@ import java.awt.event.KeyEvent;
 
 public class GamePad extends MovementController {
 
-    private final int quitKey = KeyEvent.VK_Q;
+    private final int quitKey = KeyEvent.VK_ESCAPE;
     private final int reloadKey = KeyEvent.VK_R;
     private final int sprintKey = KeyEvent.VK_SHIFT;
 

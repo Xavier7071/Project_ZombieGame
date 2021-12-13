@@ -16,7 +16,7 @@ public abstract class Enemy extends MovableEntity {
     public Enemy() {
         setDimension(32, 32);
         setSpeed(6);
-        teleport(2110, 1180);
+        spawnRandomLocation();
         CollidableRepository.getInstance().registerEntity(this);
     }
 
@@ -50,6 +50,17 @@ public abstract class Enemy extends MovableEntity {
         animations.draw(buffer, getDirection(), x, y);
     }
 
+    private void spawnRandomLocation() {
+        int tempX = (int) Math.floor(Math.random() * (3083 - 1188 + 1) + 1188);
+        int tempY = (int) Math.floor(Math.random() * (1807 - 581 + 1) + 581);
+        teleport(tempX, tempY);
+        for (Blockade blockade : World.getInstance().getBorders()) {
+            if (intersectWith(blockade)) {
+                spawnRandomLocation();
+            }
+        }
+    }
+
     private boolean checkCollisions() {
         for (Blockade blockade : World.getInstance().getBorders()) {
             if (hitBoxIntersectWith(blockade)) {
@@ -64,7 +75,7 @@ public abstract class Enemy extends MovableEntity {
 
     private void findPath(Direction direction) {
         if (direction == Direction.LEFT || direction == Direction.RIGHT) {
-            moveDown();
+            moveUp();
         } else {
             moveLeft();
         }

@@ -13,6 +13,7 @@ public class Player extends ControllableEntity {
     private final Weapon weapon;
     private int health = 100;
     private int stamina = 100;
+    private int money = 0;
     private int staminaCooldown;
 
     public Player(MovementController controller) {
@@ -42,6 +43,7 @@ public class Player extends ControllableEntity {
         buffer.drawRectangle(x - 50, y + 275, health, 15, Color.RED);
         buffer.drawRectangle(x - 50, y + 260, 100, 8, Color.black);
         buffer.drawRectangle(x - 50, y + 260, stamina, 8, Color.ORANGE);
+        buffer.drawText("Money " + money + "$", x + 60, y + 267, new Color(34, 139 , 34));
         weapon.draw(buffer, x, y);
     }
 
@@ -57,6 +59,14 @@ public class Player extends ControllableEntity {
             setSpeed(5);
         }
         handleStamina();
+    }
+
+    public void addMoney() {
+        money += 5;
+    }
+
+    public void addAmmo() {
+        weapon.addAmmo();
     }
 
     public void damage(int damage) {
