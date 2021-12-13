@@ -9,8 +9,8 @@ public class Sound {
     public static synchronized void play(String filePath) {
         new Thread(() -> {
             try {
-                FileInputStream fis = new FileInputStream(filePath);
-                Player playMP3 = new Player(fis);
+                FileInputStream fileInputStream = new FileInputStream(filePath);
+                Player playMP3 = new Player(fileInputStream);
                 playMP3.play();
             } catch (Exception e) {
                 e.printStackTrace();
