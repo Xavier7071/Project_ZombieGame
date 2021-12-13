@@ -1,5 +1,6 @@
 package cegepst.ZombieGame.Player;
 
+import cegepst.ZombieGame.Sound;
 import cegepst.engine.Buffer;
 
 import java.awt.*;
@@ -42,6 +43,7 @@ public class Weapon {
 
     public void reload() {
         if (canReload()) {
+            Sound.play("resources/sounds/reload.mp3");
             if (ammo + mag >= 10) {
                 mag -= (10 - ammo);
                 ammo = 10;

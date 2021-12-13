@@ -23,6 +23,10 @@ public class Screen {
         frame.setCursor(invisibleCursor);
     }
 
+    public void changeCursor(int cursor) {
+        frame.setCursor(cursor);
+    }
+
     public void showCursor() {
         frame.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     }

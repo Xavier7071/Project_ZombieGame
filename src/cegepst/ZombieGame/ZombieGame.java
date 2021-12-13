@@ -9,6 +9,7 @@ import cegepst.ZombieGame.Player.Player;
 import cegepst.engine.Buffer;
 import cegepst.engine.CollidableRepository;
 import cegepst.engine.Game;
+import cegepst.engine.RenderingEngine;
 import cegepst.engine.entities.StaticEntity;
 
 import java.awt.*;
@@ -35,6 +36,7 @@ public class ZombieGame extends Game {
         round.load(1);
         bullets = new ArrayList<>();
         items = new ArrayList<>();
+        RenderingEngine.getInstance().getScreen().changeCursor(Cursor.CROSSHAIR_CURSOR);
     }
 
     @Override
@@ -50,6 +52,7 @@ public class ZombieGame extends Game {
             round.update(player.getX(), player.getY());
             if (gamePad.isControllerMousePressed() && player.canFire()) {
                 bullets.add(player.fire());
+                Sound.play("resources/sounds/weapon.mp3");
             }
         }
     }
