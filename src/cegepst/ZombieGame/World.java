@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class World {
     private static World instance;
@@ -42,8 +43,8 @@ public class World {
         readJson("resources/collisions/worldBorders.json");
         readJson("resources/collisions/objects.json");
         try {
-            background = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream(MAP_PATH));
-            objectsLayer = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream(OBJECTS_PATH));
+            background = ImageIO.read(Objects.requireNonNull(this.getClass().getClassLoader().getResourceAsStream(MAP_PATH)));
+            objectsLayer = ImageIO.read(Objects.requireNonNull(this.getClass().getClassLoader().getResourceAsStream(OBJECTS_PATH)));
         } catch (IOException e) {
             e.printStackTrace();
         }

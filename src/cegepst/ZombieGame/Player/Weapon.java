@@ -1,7 +1,5 @@
 package cegepst.ZombieGame.Player;
 
-import cegepst.ZombieGame.Player.Bullet;
-import cegepst.ZombieGame.Player.Player;
 import cegepst.engine.Buffer;
 
 import java.awt.*;

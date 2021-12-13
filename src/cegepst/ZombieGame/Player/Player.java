@@ -45,7 +45,7 @@ public class Player extends ControllableEntity {
         buffer.drawRectangle(x - 50, y + 275, health, 15, Color.RED);
         buffer.drawRectangle(x - 50, y + 260, 100, 8, Color.black);
         buffer.drawRectangle(x - 50, y + 260, stamina, 8, Color.ORANGE);
-        buffer.drawText("Money " + money + "$", x + 60, y + 267, new Color(34, 139 , 34));
+        buffer.drawText("Money " + money + "$", x + 60, y + 267, new Color(34, 139, 34));
         weapon.draw(buffer, x, y);
     }
 

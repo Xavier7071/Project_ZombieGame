@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Objects;
 
 public class Animations {
 
@@ -58,7 +59,7 @@ public class Animations {
 
     private void loadSpriteSheet() {
         try {
-            spriteSheet = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream(spritePath));
+            spriteSheet = ImageIO.read(Objects.requireNonNull(this.getClass().getClassLoader().getResourceAsStream(spritePath)));
         } catch (IOException e) {
             e.printStackTrace();
         }
