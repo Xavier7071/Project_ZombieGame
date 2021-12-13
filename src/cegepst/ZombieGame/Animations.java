@@ -70,10 +70,10 @@ public class Animations {
         rightFrames = new Image[3];
         upFrames = new Image[3];
         for (int i = 0; i < 3; i++) {
-            downFrames[i] = spriteSheet.getSubimage((i * 32), 128, width, height);
-            leftFrames[i] = spriteSheet.getSubimage((i * 32), 160, width, height);
-            rightFrames[i] = spriteSheet.getSubimage((i * 32), 192, width, height);
-            upFrames[i] = spriteSheet.getSubimage((i * 32), 224, width, height);
+            downFrames[i] = spriteSheet.getSubimage((i * 32), 0, width, height);
+            leftFrames[i] = spriteSheet.getSubimage((i * 32), 32, width, height);
+            rightFrames[i] = spriteSheet.getSubimage((i * 32), 64, width, height);
+            upFrames[i] = spriteSheet.getSubimage((i * 32), 96, width, height);
         }
     }
 }

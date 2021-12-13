@@ -12,7 +12,8 @@ public class Player extends ControllableEntity {
     private final Animations animations;
     private final Weapon weapon;
     private int health = 100;
-
+    private int stamina = 100;
+    private int staminaCooldown;
 
     public Player(MovementController controller) {
         super(controller);
@@ -39,7 +40,23 @@ public class Player extends ControllableEntity {
     public void drawUI(Buffer buffer) {
         buffer.drawRectangle(x - 50, y + 275, 100, 15, Color.black);
         buffer.drawRectangle(x - 50, y + 275, health, 15, Color.RED);
+        buffer.drawRectangle(x - 50, y + 260, 100, 8, Color.black);
+        buffer.drawRectangle(x - 50, y + 260, stamina, 8, Color.ORANGE);
         weapon.draw(buffer, x, y);
+    }
+
+    public void playerActions(GamePad gamePad) {
+        if (gamePad.isReloadPressed()) {
+            reloadWeapon();
+        }
+        if (gamePad.isSprintPressed() && stamina > 0) {
+            setSpeed(7);
+            staminaCooldown = 60;
+            stamina--;
+        } else {
+            setSpeed(5);
+        }
+        handleStamina();
     }
 
     public void damage(int damage) {
@@ -48,10 +65,6 @@ public class Player extends ControllableEntity {
 
     public boolean isDead() {
         return health <= 0;
-    }
-
-    public void reloadWeapon() {
-        weapon.reload();
     }
 
     public boolean canFire() {
@@ -64,5 +77,20 @@ public class Player extends ControllableEntity {
 
     public int getDamage() {
         return weapon.getDamage();
+    }
+
+    private void reloadWeapon() {
+        weapon.reload();
+    }
+
+    private void handleStamina() {
+        staminaCooldown--;
+        if (staminaCooldown <= 0) {
+            staminaCooldown = 0;
+            stamina++;
+            if (stamina >= 100) {
+                stamina = 100;
+            }
+        }
     }
 }

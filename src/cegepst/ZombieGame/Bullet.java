@@ -15,11 +15,11 @@ public class Bullet extends MovableEntity {
         setSpeed(9);
         switch (playerDirection) {
             case RIGHT -> {
-                teleport(player.getX() + player.getWidth() + 1, player.getY() + 15 - 2);
+                teleport(player.getX() + player.getWidth() + 1, player.getY() + 24 - 2);
                 setDimension(8, 4);
             }
             case LEFT -> {
-                teleport(player.getX() - 9, player.getY() + 15 - 2);
+                teleport(player.getX() - 9, player.getY() + 24 - 2);
                 setDimension(8, 4);
             }
             case UP -> {

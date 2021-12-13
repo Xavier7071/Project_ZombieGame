@@ -6,7 +6,6 @@ public class Zombie extends Enemy {
         super();
         health = 100;
         setDimension(32, 32);
-        setSpeed(5);
-        animations = new Animations("images/player.png", 8, width, height);
+        animations = new Animations("images/zombie.png", 8, width, height);
     }
 }

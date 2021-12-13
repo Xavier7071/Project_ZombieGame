@@ -7,17 +7,26 @@ import java.util.ArrayList;
 public class Round {
 
     private final ArrayList<Zombie> zombies;
+    private int currentRound = 1;
 
-    public Round(int nbZombies) {
+    public Round() {
         zombies = new ArrayList<>();
+    }
+
+    public void load(int nbZombies) {
         for (int i = 0; i < nbZombies; i++) {
             zombies.add(new Zombie());
         }
     }
 
     public void update(int playerX, int playerY) {
-        for (Zombie zombie : zombies) {
-            zombie.update(playerX, playerY);
+        if (isOver()) {
+            currentRound++;
+            startRound();
+        } else {
+            for (Zombie zombie : zombies) {
+                zombie.update(playerX, playerY);
+            }
         }
     }
 
@@ -31,7 +40,15 @@ public class Round {
         return zombies;
     }
 
-    public boolean isOver() {
+    public boolean isWon() {
+        return currentRound > 10;
+    }
+
+    private boolean isOver() {
         return zombies.size() <= 0;
+    }
+
+    private void startRound() {
+        load(currentRound);
     }
 }

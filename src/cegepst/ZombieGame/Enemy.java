@@ -15,7 +15,7 @@ public abstract class Enemy extends MovableEntity {
 
     public Enemy() {
         setDimension(32, 32);
-        setSpeed(7);
+        setSpeed(6);
         teleport(2110, 1180);
         CollidableRepository.getInstance().registerEntity(this);
     }
@@ -30,19 +30,10 @@ public abstract class Enemy extends MovableEntity {
 
     public void update(int playerX, int playerY) {
         super.update();
-        usePathFinding = false;
         if (usePathFindingCooldown > 0) {
             findPath(lastDirection);
         } else {
-            for (Blockade blockade : World.getInstance().getBorders()) {
-                if (hitBoxIntersectWith(blockade)) {
-                    usePathFindingCooldown = 10;
-                    usePathFinding = true;
-                    lastDirection = getDirection();
-                    findPath(getDirection());
-                    break;
-                }
-            }
+            usePathFinding = checkCollisions();
             if (!usePathFinding) {
                 moveToPlayer(playerX, playerY);
             }
@@ -59,20 +50,38 @@ public abstract class Enemy extends MovableEntity {
         animations.draw(buffer, getDirection(), x, y);
     }
 
+    private boolean checkCollisions() {
+        for (Blockade blockade : World.getInstance().getBorders()) {
+            if (hitBoxIntersectWith(blockade)) {
+                usePathFindingCooldown = 10;
+                lastDirection = getDirection();
+                findPath(getDirection());
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void findPath(Direction direction) {
         if (direction == Direction.LEFT || direction == Direction.RIGHT) {
             moveDown();
-            moveUp();
         } else {
             moveLeft();
         }
     }
 
     private void moveToPlayer(int playerX, int playerY) {
+        boolean movesX = false;
+        setSpeed(6);
         if (playerX > x) {
+            movesX = true;
             moveRight();
         } else if (playerX + 10 < x) {
+            movesX = true;
             moveLeft();
+        }
+        if (movesX) {
+            setSpeed(3);
         }
         if (playerY > y) {
             moveDown();
