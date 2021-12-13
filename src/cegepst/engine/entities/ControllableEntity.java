@@ -4,9 +4,6 @@ package cegepst.engine.entities;
 import cegepst.engine.controls.Direction;
 import cegepst.engine.controls.MovementController;
 
-import javax.swing.*;
-import java.awt.*;
-
 public abstract class ControllableEntity extends MovableEntity {
 
     private final MovementController controller;

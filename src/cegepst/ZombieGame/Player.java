@@ -1,108 +1,68 @@
 package cegepst.ZombieGame;
 
-import cegepst.ZombieGame.Bullet;
 import cegepst.engine.Buffer;
+import cegepst.engine.CollidableRepository;
 import cegepst.engine.controls.MovementController;
 import cegepst.engine.entities.ControllableEntity;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 public class Player extends ControllableEntity {
 
-    private static final String SPRITE_SHEET_PATH = "images/player.png";
-    private static final int ANIMATION_SPEED = 8;
-
-    private BufferedImage spriteSheet;
-    private Image[] rightFrames;
-    private Image[] leftFrames;
-    private Image[] upFrames;
-    private Image[] downFrames;
-    private int currentAnimationFrame = 1;
-    private int nextFrame = ANIMATION_SPEED;
-    private int cooldown = 0;
-    private int ammo = 10;
+    private final Animations animations;
+    private final Weapon weapon;
     private int health = 100;
+
 
     public Player(MovementController controller) {
         super(controller);
         setDimension(32, 32);
         setSpeed(5);
-        loadSpriteSheet();
-        loadAnimationFrames();
-    }
-
-    public Bullet fire() {
-        cooldown = 40;
-        ammo--;
-        return new Bullet(this);
-    }
-
-    public boolean canFire() {
-        return cooldown == 0 && ammo > 0;
+        animations = new Animations("images/player.png", 8, width, height);
+        weapon = new Weapon(10, 50, 50);
+        CollidableRepository.getInstance().registerEntity(this);
     }
 
     @Override
     public void update() {
         super.update();
         moveAccordingToController();
-        if (hasMoved()) {
-            --nextFrame;
-            if (nextFrame == 0) {
-                ++currentAnimationFrame;
-                if (currentAnimationFrame >= leftFrames.length) {
-                    currentAnimationFrame = 0;
-                }
-                nextFrame = ANIMATION_SPEED;
-            }
-        } else {
-            currentAnimationFrame = 1;
-        }
-        cooldown--;
-        if (cooldown <= 0) {
-            cooldown = 0;
-        }
-        if (ammo <= 0) {
-            ammo = 0;
-        }
+        animations.update(hasMoved());
+        weapon.update();
     }
 
     @Override
     public void draw(Buffer buffer) {
-        switch (mouseDirection()) {
-            case RIGHT -> buffer.drawImage(rightFrames[currentAnimationFrame], x, y);
-            case LEFT -> buffer.drawImage(leftFrames[currentAnimationFrame], x, y);
-            case UP -> buffer.drawImage(upFrames[currentAnimationFrame], x, y);
-            case DOWN -> buffer.drawImage(downFrames[currentAnimationFrame], x, y);
-        }
+        animations.draw(buffer, mouseDirection(), x, y);
     }
 
     public void drawUI(Buffer buffer) {
-        buffer.drawRectangle(x - 75, y + 275, 100, 15, Color.black);
-        buffer.drawRectangle(x - 75, y + 275, health, 15, Color.RED);
-        buffer.drawText("Ammo " + ammo, x + 50, y + 285, Color.ORANGE);
+        buffer.drawRectangle(x - 50, y + 275, 100, 15, Color.black);
+        buffer.drawRectangle(x - 50, y + 275, health, 15, Color.RED);
+        weapon.draw(buffer, x, y);
     }
 
-    private void loadSpriteSheet() {
-        try {
-            spriteSheet = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream(SPRITE_SHEET_PATH));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void damage(int damage) {
+        health -= damage;
     }
 
-    private void loadAnimationFrames() {
-        downFrames = new Image[3];
-        leftFrames = new Image[3];
-        rightFrames = new Image[3];
-        upFrames = new Image[3];
-        for (int i = 0; i < 3; i++) {
-            downFrames[i] = spriteSheet.getSubimage((i * 32), 128, width, height);
-            leftFrames[i] = spriteSheet.getSubimage((i * 32), 160, width, height);
-            rightFrames[i] = spriteSheet.getSubimage((i * 32), 192, width, height);
-            upFrames[i] = spriteSheet.getSubimage((i * 32), 224, width, height);
-        }
+    public boolean isDead() {
+        return health <= 0;
+    }
+
+    public void reloadWeapon() {
+        weapon.reload();
+    }
+
+    public boolean canFire() {
+        return weapon.canFire();
+    }
+
+    public Bullet fire() {
+        return weapon.fire(this);
+    }
+
+    public int getDamage() {
+        return weapon.getDamage();
     }
 }

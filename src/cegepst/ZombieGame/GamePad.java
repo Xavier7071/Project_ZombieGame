@@ -8,9 +8,11 @@ import java.awt.event.KeyEvent;
 public class GamePad extends MovementController {
 
     private final int quitKey = KeyEvent.VK_Q;
+    private final int reloadKey = KeyEvent.VK_R;
 
     public GamePad() {
         bindKey(quitKey);
+        bindKey(reloadKey);
         RenderingEngine.getInstance().addKeyListener(this);
         setUpKey(KeyEvent.VK_W);
         setLeftKey(KeyEvent.VK_A);
@@ -20,6 +22,10 @@ public class GamePad extends MovementController {
 
     public boolean isQuitPressed() {
         return isKeyPressed(quitKey);
+    }
+
+    public boolean isReloadPressed() {
+        return isKeyPressed(reloadKey);
     }
 
     public boolean isControllerMousePressed() {

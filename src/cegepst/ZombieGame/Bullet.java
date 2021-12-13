@@ -12,7 +12,7 @@ public class Bullet extends MovableEntity {
 
     public Bullet(Player player) {
         playerDirection = player.mouseDirection();
-        setSpeed(7);
+        setSpeed(9);
         switch (playerDirection) {
             case RIGHT -> {
                 teleport(player.getX() + player.getWidth() + 1, player.getY() + 15 - 2);

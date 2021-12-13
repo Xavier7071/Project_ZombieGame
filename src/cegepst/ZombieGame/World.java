@@ -12,17 +12,18 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class World {
-
+    private static World instance;
     private static final String MAP_PATH = "images/final-map.png";
     private static final String OBJECTS_PATH = "images/objects.png";
-    private final ArrayList<Blockade> borders;
+    private ArrayList<Blockade> borders;
     private Image background;
     private Image objectsLayer;
 
-    public World() {
-        borders = new ArrayList<>();
-        readJson("resources/collisions/worldBorders.json");
-        readJson("resources/collisions/objects.json");
+    public static World getInstance() {
+        if (instance == null) {
+            instance = new World();
+        }
+        return instance;
     }
 
     public void draw(Buffer buffer) {
@@ -33,10 +34,13 @@ public class World {
     }
 
     public void drawObjects(Buffer buffer) {
-        buffer.drawImage(objectsLayer, 512, 512);
+        buffer.drawImage(objectsLayer, 0, 0);
     }
 
     public void load() {
+        borders = new ArrayList<>();
+        readJson("resources/collisions/worldBorders.json");
+        readJson("resources/collisions/objects.json");
         try {
             background = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream(MAP_PATH));
             objectsLayer = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream(OBJECTS_PATH));
@@ -49,6 +53,7 @@ public class World {
         return borders;
     }
 
+
     private void readJson(String filePath) {
         try {
             Path fileName = Path.of(filePath);
@@ -59,7 +64,6 @@ public class World {
                 JSONObject obj = array.getJSONObject(i);
                 int x = (int) Math.ceil(obj.getDouble("x")) + 2050;
                 int y = (int) Math.ceil(obj.getDouble("y")) + 2550;
-                obj.getDouble("y");
                 createBlockade(x, y);
             }
         } catch (IOException e) {
