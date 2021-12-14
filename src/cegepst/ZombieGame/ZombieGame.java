@@ -73,6 +73,9 @@ public class ZombieGame extends Game {
         }
         World.getInstance().drawObjects(buffer);
         player.drawUI(buffer);
+        if (round.isPaused()) {
+            round.drawUI(buffer, player.getX(), player.getY());
+        }
         if (player.isDead()) {
             buffer.drawRectangle(player.getX() - 400, player.getY() - 300, 800, 600, new Color(0, 0, 0));
             buffer.drawText("Game Over", player.getX(), player.getY(), Color.red);

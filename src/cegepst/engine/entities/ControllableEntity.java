@@ -28,16 +28,16 @@ public abstract class ControllableEntity extends MovableEntity {
     }
 
     public Direction mouseDirection() {
-        if (controller.getMouseYPosition() < 485) {
+        if (controller.getMouseYPosition() < 400) {
             return Direction.UP;
         }
         if (controller.getMouseYPosition() > 580) {
             return Direction.DOWN;
         }
-        if (controller.getMouseXPosition() > 1000) {
+        if (controller.getMouseXPosition() > 800) {
             return Direction.RIGHT;
         }
-        if (controller.getMouseXPosition() < 900) {
+        if (controller.getMouseXPosition() < 700) {
             return Direction.LEFT;
         }
         return Direction.DOWN;

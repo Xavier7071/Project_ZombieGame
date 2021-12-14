@@ -25,6 +25,10 @@ public class Buffer {
         graphics.drawString(text, x, y);
     }
 
+    public void setFontSize(int style, int fontSize) {
+        graphics.setFont(new Font("TimesRoman", style, fontSize));
+    }
+
     public void drawImage(Image image, int x, int y) {
         graphics.drawImage(image, x, y, null);
     }
