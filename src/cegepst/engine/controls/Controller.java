@@ -96,13 +96,13 @@ public abstract class Controller implements KeyListener, MouseListener, MouseMot
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        mouseXPosition = e.getXOnScreen();
-        mouseYPosition = e.getYOnScreen();
+        mouseXPosition = e.getX();
+        mouseYPosition = e.getY();
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        mouseXPosition = e.getXOnScreen();
-        mouseYPosition = e.getYOnScreen();
+        mouseXPosition = e.getX();
+        mouseYPosition = e.getY();
     }
 }

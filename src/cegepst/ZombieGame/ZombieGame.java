@@ -25,8 +25,10 @@ public class ZombieGame extends Game {
     private Player player;
     private Camera camera;
     private Round round;
+    private Shop shop;
     private ArrayList<Bullet> bullets;
     private ArrayList<Item> items;
+    private boolean shopIsOpened;
 
     @Override
     public void initialize() {
@@ -39,6 +41,7 @@ public class ZombieGame extends Game {
         round.load(1);
         bullets = new ArrayList<>();
         items = new ArrayList<>();
+        shop = new Shop();
         RenderingEngine.getInstance().getScreen().changeCursor(Cursor.CROSSHAIR_CURSOR);
     }
 
@@ -48,6 +51,15 @@ public class ZombieGame extends Game {
             stop();
         }
         if (!player.isDead() && !round.isWon()) {
+            if (round.isPaused() && gamePad.isShopPressed()) {
+                shopIsOpened = !shopIsOpened;
+            }
+            if (shopIsOpened) {
+                shop.update(gamePad, player);
+            }
+            if (!round.isPaused()) {
+                shopIsOpened = false;
+            }
             player.playerActions(gamePad);
             player.update();
             camera.position(player);
@@ -73,6 +85,9 @@ public class ZombieGame extends Game {
         }
         World.getInstance().drawObjects(buffer);
         player.drawUI(buffer);
+        if (shopIsOpened) {
+            shop.draw(buffer);
+        }
         if (round.isPaused()) {
             round.drawUI(buffer, player.getX(), player.getY());
         }

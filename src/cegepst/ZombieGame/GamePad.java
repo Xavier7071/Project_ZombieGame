@@ -10,11 +10,13 @@ public class GamePad extends MovementController {
     private final int quitKey = KeyEvent.VK_ESCAPE;
     private final int reloadKey = KeyEvent.VK_R;
     private final int sprintKey = KeyEvent.VK_SHIFT;
+    private final int shopKey = KeyEvent.VK_I;
 
     public GamePad() {
         bindKey(quitKey);
         bindKey(reloadKey);
         bindKey(sprintKey);
+        bindKey(shopKey);
         RenderingEngine.getInstance().addKeyListener(this);
         setUpKey(KeyEvent.VK_W);
         setLeftKey(KeyEvent.VK_A);
@@ -32,6 +34,10 @@ public class GamePad extends MovementController {
 
     public boolean isSprintPressed() {
         return isKeyPressed(sprintKey);
+    }
+
+    public boolean isShopPressed() {
+        return isKeyPressed(shopKey);
     }
 
     public boolean isControllerMousePressed() {

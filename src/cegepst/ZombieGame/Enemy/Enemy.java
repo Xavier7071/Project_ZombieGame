@@ -8,6 +8,8 @@ import cegepst.engine.CollidableRepository;
 import cegepst.engine.controls.Direction;
 import cegepst.engine.entities.MovableEntity;
 
+import java.awt.*;
+
 public abstract class Enemy extends MovableEntity {
 
     protected Animations animations;
@@ -51,6 +53,8 @@ public abstract class Enemy extends MovableEntity {
     @Override
     public void draw(Buffer buffer) {
         animations.draw(buffer, getDirection(), x, y);
+        buffer.drawRectangle(x + 4, y - 10, 25, 5, Color.black);
+        buffer.drawRectangle(x + 4, y - 10, health / 4, 5, Color.RED);
     }
 
     private void spawnRandomLocation() {
