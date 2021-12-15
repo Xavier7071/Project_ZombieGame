@@ -22,7 +22,7 @@ public class Player extends ControllableEntity {
         setDimension(32, 32);
         setSpeed(5);
         animations = new Animations("images/player.png", 8, width, height);
-        Weapon.getInstance().createWeapon(10, 50, 25, 30);
+        Weapon.getInstance().createWeapon(10, 50, 25, 20);
         CollidableRepository.getInstance().registerEntity(this);
     }
 
