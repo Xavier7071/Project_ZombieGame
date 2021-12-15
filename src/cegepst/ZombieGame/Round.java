@@ -53,7 +53,7 @@ public class Round {
     }
 
     public void drawUI(Buffer buffer, int x, int y) {
-        buffer.drawText(remainingSeconds + " seconds until next round", x - 50, y - 150, Color.orange);
+        buffer.drawText(remainingSeconds + " seconds until next round", x - 50, y - 225, Color.orange);
     }
 
     public ArrayList<Zombie> getZombies() {

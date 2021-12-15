@@ -29,6 +29,7 @@ public class ZombieGame extends Game {
     private ArrayList<Bullet> bullets;
     private ArrayList<Item> items;
     private boolean shopIsOpened;
+    private int shopCooldown = 0;
 
     @Override
     public void initialize() {
@@ -47,11 +48,16 @@ public class ZombieGame extends Game {
 
     @Override
     public void update() {
+        shopCooldown--;
+        if (shopCooldown <= 0) {
+            shopCooldown = 0;
+        }
         if (gamePad.isQuitPressed()) {
             stop();
         }
         if (!player.isDead() && !round.isWon()) {
-            if (round.isPaused() && gamePad.isShopPressed()) {
+            if (round.isPaused() && gamePad.isShopPressed() && shopCooldown <= 0) {
+                shopCooldown = 10;
                 shopIsOpened = !shopIsOpened;
             }
             if (shopIsOpened) {
@@ -86,7 +92,7 @@ public class ZombieGame extends Game {
         World.getInstance().drawObjects(buffer);
         player.drawUI(buffer);
         if (shopIsOpened) {
-            shop.draw(buffer);
+            shop.draw(buffer, player.getX(), player.getY());
         }
         if (round.isPaused()) {
             round.drawUI(buffer, player.getX(), player.getY());
