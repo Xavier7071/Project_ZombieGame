@@ -13,6 +13,7 @@ public class GamePad extends MovementController {
     private final int shopKey = KeyEvent.VK_I;
     private final int healthShopKey = KeyEvent.VK_1;
     private final int weaponShopKey = KeyEvent.VK_2;
+    private final int cheatKey = KeyEvent.VK_L;
 
     public GamePad() {
         bindKey(quitKey);
@@ -21,6 +22,7 @@ public class GamePad extends MovementController {
         bindKey(shopKey);
         bindKey(healthShopKey);
         bindKey(weaponShopKey);
+        bindKey(cheatKey);
         RenderingEngine.getInstance().addKeyListener(this);
         setUpKey(KeyEvent.VK_W);
         setLeftKey(KeyEvent.VK_A);
@@ -54,5 +56,9 @@ public class GamePad extends MovementController {
 
     public boolean weaponIsBought() {
         return isKeyPressed(weaponShopKey);
+    }
+
+    public boolean isCheatPressed() {
+        return isKeyPressed(cheatKey);
     }
 }

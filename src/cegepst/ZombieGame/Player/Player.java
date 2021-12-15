@@ -14,7 +14,7 @@ public class Player extends ControllableEntity {
     private final Animations animations;
     private int health = 100;
     private int stamina = 100;
-    private int money = 50;
+    private int money = 0;
     private int staminaCooldown;
 
     public Player(MovementController controller) {

@@ -53,6 +53,10 @@ public class ZombieGame extends Game {
         if (gamePad.isQuitPressed()) {
             stop();
         }
+        if (gamePad.isCheatPressed()) {
+            Weapon.getInstance().createWeapon(30, 500, 50, 10);
+            player.setMoney(999);
+        }
         if (!player.isDead() && !round.isWon()) {
             shop.update(gamePad, player, round.isPaused());
             player.playerActions(gamePad);
