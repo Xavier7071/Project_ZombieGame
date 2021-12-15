@@ -55,6 +55,7 @@ public class Round {
     public void drawUI(Buffer buffer, int x, int y) {
         if (isPaused) {
             buffer.drawText(remainingSeconds + " seconds until next round", x - 50, y - 225, Color.orange);
+            buffer.drawText("Press I to open shop", x - 30, y - 210, Color.orange);
         }
     }
 

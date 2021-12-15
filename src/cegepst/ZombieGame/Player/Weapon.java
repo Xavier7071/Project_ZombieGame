@@ -50,7 +50,7 @@ public class Weapon {
     }
 
     public void draw(Buffer buffer, int x, int y) {
-        buffer.drawText("Ammos " + ammo + "/" + mag, x + 60, y + 285, Color.ORANGE);
+        buffer.drawText("Ammo " + ammo + "/" + mag, x + 60, y + 285, Color.ORANGE);
     }
 
     public void reload() {
