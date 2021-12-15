@@ -2,6 +2,7 @@ package cegepst.ZombieGame;
 
 import cegepst.ZombieGame.Assets.Blockade;
 import cegepst.ZombieGame.Assets.Camera;
+import cegepst.ZombieGame.Assets.Shop;
 import cegepst.ZombieGame.Assets.Sound;
 import cegepst.ZombieGame.Enemy.Zombie;
 import cegepst.ZombieGame.Items.Ammo;
@@ -9,6 +10,7 @@ import cegepst.ZombieGame.Items.Item;
 import cegepst.ZombieGame.Items.Money;
 import cegepst.ZombieGame.Player.Bullet;
 import cegepst.ZombieGame.Player.Player;
+import cegepst.ZombieGame.Player.Weapon;
 import cegepst.engine.Buffer;
 import cegepst.engine.CollidableRepository;
 import cegepst.engine.Game;
@@ -28,6 +30,7 @@ public class ZombieGame extends Game {
     private Shop shop;
     private ArrayList<Bullet> bullets;
     private ArrayList<Item> items;
+    ArrayList<StaticEntity> killedEntities;
     private boolean shopIsOpened;
     private int shopCooldown = 0;
 
@@ -43,6 +46,7 @@ public class ZombieGame extends Game {
         bullets = new ArrayList<>();
         items = new ArrayList<>();
         shop = new Shop();
+        killedEntities = new ArrayList<>();
         RenderingEngine.getInstance().getScreen().changeCursor(Cursor.CROSSHAIR_CURSOR);
     }
 
@@ -71,7 +75,7 @@ public class ZombieGame extends Game {
             camera.position(player);
             checkCollisions();
             round.update(player.getX(), player.getY());
-            if (gamePad.isControllerMousePressed() && player.canFire()) {
+            if (gamePad.isControllerMousePressed() && Weapon.getInstance().canFire()) {
                 bullets.add(player.fire());
                 Sound.play("resources/sounds/weapon.mp3");
             }
@@ -112,8 +116,13 @@ public class ZombieGame extends Game {
     }
 
     private void checkCollisions() {
-        ArrayList<StaticEntity> killedEntities = new ArrayList<>();
+        checkBulletsCollisions();
+        checkItemsCollisions();
+        destroyEntities();
+        checkZombiesCollisions();
+    }
 
+    private void checkBulletsCollisions() {
         for (Bullet bullet : bullets) {
             bullet.update();
             for (Blockade blockade : World.getInstance().getBorders()) {
@@ -123,7 +132,7 @@ public class ZombieGame extends Game {
             }
             for (Zombie zombie : round.getZombies()) {
                 if (bullet.hitBoxIntersectWith(zombie)) {
-                    zombie.damage(player.getDamage());
+                    zombie.damage(Weapon.getInstance().getDamage());
                     killedEntities.add(bullet);
                 }
                 if (zombie.getHealth() <= 0) {
@@ -132,18 +141,22 @@ public class ZombieGame extends Game {
                 }
             }
         }
+    }
 
+    private void checkItemsCollisions() {
         for (Item item : items) {
             if (player.hitBoxIntersectWith(item)) {
                 if (item instanceof Money) {
                     player.addMoney();
                 } else {
-                    player.addAmmo();
+                    Weapon.getInstance().addAmmo();
                 }
                 killedEntities.add(item);
             }
         }
+    }
 
+    private void destroyEntities() {
         for (StaticEntity entity : killedEntities) {
             if (entity instanceof Bullet) {
                 bullets.remove(entity);
@@ -156,6 +169,9 @@ public class ZombieGame extends Game {
             }
             CollidableRepository.getInstance().unregisterEntity(entity);
         }
+    }
+
+    private void checkZombiesCollisions() {
         for (Zombie zombie : round.getZombies()) {
             if (zombie.hitBoxIntersectWith(player)) {
                 player.damage(1);
