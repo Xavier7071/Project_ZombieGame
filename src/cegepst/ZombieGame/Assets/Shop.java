@@ -19,6 +19,8 @@ public class Shop {
     private BufferedImage potionSpriteSheet;
     private BufferedImage weaponSpriteSheet;
     private boolean weaponIsBought;
+    private boolean shopIsOpened;
+    private int shopCooldown;
 
     public Shop() {
         loadSpriteSheets();
@@ -26,28 +28,44 @@ public class Shop {
     }
 
     public void draw(Buffer buffer, int x, int y) {
-        buffer.drawImage(shopImage, x - 200, y - 200);
-        if (!weaponIsBought) {
-            drawPotion(buffer, x, y);
-            drawWeapon(buffer, x, y);
-        } else {
-            buffer.drawImage(potionImage, x - 25, y - 150);
-            buffer.drawText("Health potion", x - 30, y - 65, Color.black);
-            buffer.drawText("10$", x - 5, y - 35, Color.black);
-            buffer.drawText("Press 1 to purchase", x - 50, y - 5, Color.black);
+        if (shopIsOpened) {
+            buffer.drawImage(shopImage, x - 200, y - 200);
+            if (!weaponIsBought) {
+                drawPotion(buffer, x, y);
+                drawWeapon(buffer, x, y);
+            } else {
+                drawPotionInMiddle(buffer, x, y);
+            }
         }
     }
 
-    public void update(GamePad gamePad, Player player) {
-        if (gamePad.weaponIsBought() && player.getMoney() >= 20) {
-            Weapon.getInstance().createWeapon(30, Weapon.getInstance().getMagSize(), 25, 10);
-            player.setMoney(player.getMoney() - 20);
-            weaponIsBought = true;
+    public void update(GamePad gamePad, Player player, boolean roundPaused) {
+        if (roundPaused && gamePad.isShopPressed()) {
+            open();
         }
-        if (gamePad.healthPotionIsBought() && player.getMoney() >= 10 && player.canHeal()) {
-            player.heal();
-            player.setMoney(player.getMoney() - 10);
+        if (!roundPaused) {
+            close();
         }
+        reduceCooldown();
+        if (shopIsOpened) {
+            if (gamePad.weaponIsBought() && player.getMoney() >= 20) {
+                buyWeapon(player);
+            }
+            if (gamePad.healthPotionIsBought() && player.getMoney() >= 10 && player.canHeal()) {
+                buyPotion(player);
+            }
+        }
+    }
+
+    private void open() {
+        if (shopCooldown <= 0) {
+            shopCooldown = 10;
+            shopIsOpened = !shopIsOpened;
+        }
+    }
+
+    private void close() {
+        shopIsOpened = false;
     }
 
     private void loadSpriteSheets() {
@@ -78,5 +96,30 @@ public class Shop {
         buffer.drawText("MP5", x + 105, y - 65, Color.black);
         buffer.drawText("20$", x + 105, y - 35, Color.black);
         buffer.drawText("Press 2 to purchase", x + 70, y - 5, Color.black);
+    }
+
+    private void drawPotionInMiddle(Buffer buffer, int x, int y) {
+        buffer.drawImage(potionImage, x - 25, y - 150);
+        buffer.drawText("Health potion", x - 30, y - 65, Color.black);
+        buffer.drawText("10$", x - 5, y - 35, Color.black);
+        buffer.drawText("Press 1 to purchase", x - 50, y - 5, Color.black);
+    }
+
+    private void buyWeapon(Player player) {
+        Weapon.getInstance().createWeapon(30, Weapon.getInstance().getMagSize(), 25, 10);
+        player.setMoney(player.getMoney() - 20);
+        weaponIsBought = true;
+    }
+
+    private void buyPotion(Player player) {
+        player.heal();
+        player.setMoney(player.getMoney() - 10);
+    }
+
+    private void reduceCooldown() {
+        shopCooldown--;
+        if (shopCooldown <= 0) {
+            shopCooldown = 0;
+        }
     }
 }

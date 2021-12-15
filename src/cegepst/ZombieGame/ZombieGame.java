@@ -31,8 +31,6 @@ public class ZombieGame extends Game {
     private ArrayList<Bullet> bullets;
     private ArrayList<Item> items;
     ArrayList<StaticEntity> killedEntities;
-    private boolean shopIsOpened;
-    private int shopCooldown = 0;
 
     @Override
     public void initialize() {
@@ -52,24 +50,11 @@ public class ZombieGame extends Game {
 
     @Override
     public void update() {
-        shopCooldown--;
-        if (shopCooldown <= 0) {
-            shopCooldown = 0;
-        }
         if (gamePad.isQuitPressed()) {
             stop();
         }
         if (!player.isDead() && !round.isWon()) {
-            if (round.isPaused() && gamePad.isShopPressed() && shopCooldown <= 0) {
-                shopCooldown = 10;
-                shopIsOpened = !shopIsOpened;
-            }
-            if (shopIsOpened) {
-                shop.update(gamePad, player);
-            }
-            if (!round.isPaused()) {
-                shopIsOpened = false;
-            }
+            shop.update(gamePad, player, round.isPaused());
             player.playerActions(gamePad);
             player.update();
             camera.position(player);
@@ -95,19 +80,13 @@ public class ZombieGame extends Game {
         }
         World.getInstance().drawObjects(buffer);
         player.drawUI(buffer);
-        if (shopIsOpened) {
-            shop.draw(buffer, player.getX(), player.getY());
-        }
-        if (round.isPaused()) {
-            round.drawUI(buffer, player.getX(), player.getY());
-        }
+        shop.draw(buffer, player.getX(), player.getY());
+        round.drawUI(buffer, player.getX(), player.getY());
         if (player.isDead()) {
-            buffer.drawRectangle(player.getX() - 400, player.getY() - 300, 800, 600, new Color(0, 0, 0));
-            buffer.drawText("Game Over", player.getX(), player.getY(), Color.red);
+            drawGameOver(buffer);
         }
         if (round.isWon()) {
-            buffer.drawRectangle(player.getX() - 400, player.getY() - 300, 800, 600, new Color(0, 0, 0));
-            buffer.drawText("You won", player.getX(), player.getY(), Color.orange);
+            drawWin(buffer);
         }
     }
 
@@ -187,5 +166,15 @@ public class ZombieGame extends Game {
         } else {
             items.add(new Ammo(zombie.getX(), zombie.getY()));
         }
+    }
+
+    private void drawWin(Buffer buffer) {
+        buffer.drawRectangle(player.getX() - 400, player.getY() - 300, 800, 600, new Color(0, 0, 0));
+        buffer.drawText("You won", player.getX(), player.getY(), Color.orange);
+    }
+
+    private void drawGameOver(Buffer buffer) {
+        buffer.drawRectangle(player.getX() - 400, player.getY() - 300, 800, 600, new Color(0, 0, 0));
+        buffer.drawText("Game Over", player.getX(), player.getY(), Color.red);
     }
 }
